@@ -87,7 +87,7 @@ void EvalSubset(Attribute Att, CaseCount Cases)
     CaseCount	KnownCases;
     Boolean	Better;
 double alpha =1.95;
-double q= 1/(1-alpha);
+double q= 1/(alpha-1);
     /*  First compute Freq[][], ValFreq[], base info, and the gain
 	and total info of a split on discrete attribute Att  */
 
@@ -243,7 +243,7 @@ double q= 1/(1-alpha);
 	GEnv.SubsetInfo[V1] = (pow(GEnv.ValFreq[V1],alpha));
 	GEnv.SubsetEntr[V1] = TotalInfo(GEnv.Freq[V1], 1, MaxClass);
     }
-   GEnv.SubsetInfo[V1]=GEnv.SubsetInfo[V1]-1;
+   GEnv.SubsetInfo[V1]=1-GEnv.SubsetInfo[V1];
 	GEnv.SubsetInfo[V1] *= q;
 	GEnv.SubsetInfo[V1] /=Cases;
     ForEach(V1, First, GEnv.Blocks-1)
@@ -373,7 +373,7 @@ void Merge(DiscrValue x, DiscrValue y, CaseCount Cases)
     int		R, C;
 double alpha =1.95;
 	int i=0;
-	double q=1/(1-alpha);
+	double q=1/(alpha-1);
 	double count[20];
     AddBlock(x, y); 
   
@@ -389,14 +389,14 @@ double alpha =1.95;
 		count[i] = -1 * count[i];
 	}			
 	Entr = Entr /KnownCases;
-   	Entr = Entr -1;
+   	Entr = 1-Entr;
 	Entr *= q;	
 	count[i] /= KnownCases;
 	Entr *= count[i];
 	
 	i++;
 	GEnv.ValFreq[x] /= Cases;
-    GEnv.SubsetInfo[x] =  (pow(GEnv.ValFreq[x],alpha)-1) * q;
+    GEnv.SubsetInfo[x] =  (1-(pow(GEnv.ValFreq[x],alpha))) * q;
     //GEnv.SubsetEntr[x] = Entr + KnownCases * Log(KnownCases);
 	
 	GEnv.SubsetEntr[x]=Entr;
@@ -453,7 +453,7 @@ void EvaluatePair(DiscrValue x, DiscrValue y, CaseCount Cases)
 double alpha= 1.95;
 	int i=0;
 	double count[20];
-double q = 1/(1-alpha);
+double q = 1/(alpha-1);
     if ( y < x )
     {
 	c = y;
@@ -477,7 +477,7 @@ double q = 1/(1-alpha);
 		count[i] = -1 * count[i];
 	}
 	Entr = Entr /KnownCases;
-    	Entr =( Entr-1)*q;
+    	Entr =( 1-Entr)*q;
 	count[i] /= KnownCases;
 	Entr *= count[i];
 	
