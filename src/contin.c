@@ -40,7 +40,7 @@
 #include "math.h"
 #define alpha 1.95
 #define q 1/(1-alpha)
-#define	PartInfo(n) ((pow(n,alpha)/GEnv.Cases)-1) *q
+#define	PartInfo(n) (pow(n,alpha)/GEnv.Cases)-1 *q
 
 
 /*************************************************************************/
