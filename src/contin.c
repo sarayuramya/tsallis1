@@ -38,7 +38,7 @@
 #include "transform.h"
 #include "redefine.h"
 #include "math.h"
-#define alpha 1.95
+#define alpha 4.95
 #define q 1/(alpha-1)
 #define	PartInfo(n) 1-(pow(n,alpha)/GEnv.Cases) *q
 
