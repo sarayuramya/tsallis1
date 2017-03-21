@@ -51,7 +51,8 @@ void EvalDiscreteAtt(Attribute Att, CaseCount Cases)
     int		ReasonableSubsets=0;
     DiscrValue	v;
     double	BaseInfo;
-
+    double unknown=0.0;
+    double alpha=1.95;
     SetDiscrFreq(Att);
     KnownCases = Cases - GEnv.ValFreq[0];
 
@@ -70,8 +71,8 @@ void EvalDiscreteAtt(Attribute Att, CaseCount Cases)
 
     BaseInfo = ( ! GEnv.ValFreq[0] ? GlobalBaseInfo :
 		     DiscrKnownBaseInfo(KnownCases, MaxAttVal[Att]) );
-
-    Gain[Att] = ComputeGain(BaseInfo, GEnv.ValFreq[0] / Cases, MaxAttVal[Att],
+    unknown=pow((GEnv.ValFreq[0] / Cases),alpha);
+    Gain[Att] = ComputeGain(BaseInfo,unknown , MaxAttVal[Att],
 			    KnownCases);
     Info[Att] = TotalInfo(GEnv.ValFreq, 0, MaxAttVal[Att]) / Cases;
 
@@ -103,7 +104,8 @@ void EvalOrderedAtt(Attribute Att, CaseCount Cases)
     int		Tries=0;
     DiscrValue	v, BestV;
     double	BaseInfo, ThisGain, BestInfo, BestGain=None;
-
+    double unknown=0.0;
+    double alpha=1.95;
     SetDiscrFreq(Att);
     KnownCases = Cases - GEnv.ValFreq[0];
 
@@ -147,8 +149,9 @@ void EvalOrderedAtt(Attribute Att, CaseCount Cases)
 	     SplitFreq[2] >= MINITEMS && SplitFreq[3] >= MINITEMS )
 	{
 	    Tries++;
+	    unknown=pow((GEnv.ValFreq[0] / Cases),alpha);
 	    ThisGain =
-		ComputeGain(BaseInfo, GEnv.ValFreq[0] / Cases, 3, KnownCases);
+		ComputeGain(BaseInfo, unknown, 3, KnownCases);
 
 	    if ( ThisGain > BestGain )
 	    {
