@@ -67,7 +67,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
 
     Gain[Att] = None;
     PrepareForContin(Att, Fp, Lp);
-	double alpha =1.95
+	//double alpha =1.95
     /*  Special case when very few known values  */
 
     if ( GEnv.ApplicCases < 2 * MINITEMS )
@@ -227,7 +227,7 @@ void EstimateMaxGR(Attribute Att, CaseNo Fp, CaseNo Lp)
     CaseNo	i, j;
     double	LHInfo, w, SplitInfo, ThisGain, GR;
     ClassNo	c;
-double alpha=1.95;
+    //double alpha=1.95;
     EstMaxGR[Att] = 0;
 
     if ( Skip(Att) || Att == ClassAtt ) return;
