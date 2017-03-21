@@ -96,10 +96,10 @@ double TotalInfo(double V[], DiscrValue MinVal, DiscrValue MaxVal)
     DiscrValue	v,x,y;
     double	Sum=0.0, TotalCases=0,Sum1=0.0;
     CaseCount	N;
-double alpha =1.95;
+double alpha =-1.95;
 	double count[20];
 	int i=0;
-	double q= 1/(1-alpha); 
+	double q= 1/(alpha-1); 
 	
  	ForEach(v, MinVal, MaxVal)
     	{
@@ -109,7 +109,7 @@ double alpha =1.95;
 	TotalCases += N;
     	}
 	Sum = Sum /TotalCases;
-	Sum =(Sum-1)*q;	
+	Sum =(1-Sum)*q;	
     return Sum;
 }
 
