@@ -87,8 +87,8 @@ void EvalSubset(Attribute Att, CaseCount Cases)
     CaseCount	KnownCases;
     Boolean	Better;
 	int i=0;
-double alpha =4.95;
-double q= 1/(alpha-1);
+double alpha =1.95;
+double q= 1/(1-alpha);
     /*  First compute Freq[][], ValFreq[], base info, and the gain
 	and total info of a split on discrete attribute Att  */
 
@@ -109,7 +109,7 @@ double q= 1/(alpha-1);
     }
 
     KnownCases  = Cases - GEnv.ValFreq[0];
-    UnknownRate = GEnv.ValFreq[0] / Cases;
+    UnknownRate = pow((GEnv.ValFreq[0] / Cases),alpha);
 
     BaseInfo = ( ! GEnv.ValFreq[0] ? GlobalBaseInfo :
 		     DiscrKnownBaseInfo(KnownCases, MaxAttVal[Att]) );
@@ -246,7 +246,7 @@ double q= 1/(alpha-1);
 	GEnv.SubsetInfo[V1] = (pow(GEnv.ValFreq[V1],alpha));
 	GEnv.SubsetEntr[V1] = TotalInfo(GEnv.Freq[V1], 1, MaxClass);
 	}
-        GEnv.SubsetInfo[V1]=1-GEnv.SubsetInfo[V1];
+        GEnv.SubsetInfo[V1]=GEnv.SubsetInfo[V1]-1;
 	GEnv.SubsetInfo[V1] *= q;
 	GEnv.SubsetInfo[V1] /=Cases;
 	i++;
@@ -282,7 +282,7 @@ double q= 1/(alpha-1);
 		}
 
 		ThisGain = PrevGain -
-			   ((1-UnknownRate) / KnownCases) *
+			  pow(((1-UnknownRate) / KnownCases),alpha) *
 			     (GEnv.MergeEntr[V1][V2] -
 			       (GEnv.SubsetEntr[V1] + GEnv.SubsetEntr[V2]));
 		ThisInfo = PrevInfo + (GEnv.MergeInfo[V1][V2] -
@@ -376,9 +376,9 @@ void Merge(DiscrValue x, DiscrValue y, CaseCount Cases)
     double	Entr=0;
     CaseCount	KnownCases=0;
     int		R, C;
-double alpha =4.95;
+double alpha =1.95;
 	int i=0;
-	double q=1/(alpha-1);
+	double q=1/(1-alpha);
 	double count[20];
     AddBlock(x, y); 
   
@@ -394,14 +394,14 @@ double alpha =4.95;
 		count[i] = -1 * count[i];
 	}			
 	Entr = Entr /KnownCases;
-   	Entr = 1- Entr;
+   	Entr =  Entr-1;
 	Entr *= q;	
 	count[i] /= KnownCases;
 	Entr *= count[i];
 	
 	i++;
 	GEnv.ValFreq[x] /= Cases;
-    GEnv.SubsetInfo[x] = 1- (pow(GEnv.ValFreq[x],alpha)) * q;
+    GEnv.SubsetInfo[x] = (pow(GEnv.ValFreq[x],alpha)-1) * q;
     //GEnv.SubsetEntr[x] = Entr + KnownCases * Log(KnownCases);
 	
 	GEnv.SubsetEntr[x]=Entr;
@@ -455,10 +455,10 @@ void EvaluatePair(DiscrValue x, DiscrValue y, CaseCount Cases)
     ClassNo	c;
     double	Entr=0;
     CaseCount	KnownCases=0, F;
-double alpha=4.95;
+double alpha=1.95;
 	int i=0;
 	double count[20];
-double q = 1/(alpha-1);
+double q = 1/(1-alpha);
     if ( y < x )
     {
 	c = y;
@@ -468,7 +468,7 @@ double q = 1/(alpha-1);
 
     F = GEnv.ValFreq[x] + GEnv.ValFreq[y];
     F /= Cases;
-    GEnv.MergeInfo[x][y] = q*(1-pow(F ,alpha));
+    GEnv.MergeInfo[x][y] = q*(pow(F ,alpha)-1);
      
     ForEach(c, 1, MaxClass)
     {
@@ -482,7 +482,7 @@ double q = 1/(alpha-1);
 		count[i] = -1 * count[i];
 	}
 	Entr = Entr /KnownCases;
-    	Entr =( 1-Entr)*q;
+    	Entr =( Entr-1)*q;
 	count[i] /= KnownCases;
 	Entr *= count[i];
 	
