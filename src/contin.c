@@ -155,7 +155,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
 		{
 		    fprintf(Of, "\t\tCut at %.3f  (gain %.3f):",
 			   (GEnv.LowVal + GEnv.HighVal) / 2,
-			  (pow((1 - GEnv.UnknownRate),alpha) *
+			  (pow((1 - GEnv.UnknownRate),alpha)) *
 			   (GEnv.BaseInfo - (GEnv.NAInfo + LHInfo) / GEnv.KnownCases));
 		    PrintDistribution(Att, 2, 3, GEnv.Freq, GEnv.ValFreq, true);
 		})
