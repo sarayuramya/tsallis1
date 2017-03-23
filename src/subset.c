@@ -87,7 +87,7 @@ void EvalSubset(Attribute Att, CaseCount Cases)
     CaseCount	KnownCases;
     Boolean	Better;
 	int i=0;
-double alpha =2.50;
+double alpha =1.95;
 double q= 1/(1-alpha);
     /*  First compute Freq[][], ValFreq[], base info, and the gain
 	and total info of a split on discrete attribute Att  */
@@ -282,7 +282,7 @@ double q= 1/(1-alpha);
 		}
 
 		ThisGain = PrevGain -
-			  pow(((1-UnknownRate) / KnownCases),alpha) *
+			  ((1-UnknownRate) / KnownCases) *
 			     (GEnv.MergeEntr[V1][V2] -
 			       (GEnv.SubsetEntr[V1] + GEnv.SubsetEntr[V2]));
 		ThisInfo = PrevInfo + (GEnv.MergeInfo[V1][V2] -
@@ -376,7 +376,7 @@ void Merge(DiscrValue x, DiscrValue y, CaseCount Cases)
     double	Entr=0;
     CaseCount	KnownCases=0;
     int		R, C;
-double alpha =2.50;
+double alpha =1.95;
 	int i=0;
 	double q=1/(1-alpha);
 	double count[20];
@@ -455,7 +455,7 @@ void EvaluatePair(DiscrValue x, DiscrValue y, CaseCount Cases)
     ClassNo	c;
     double	Entr=0;
     CaseCount	KnownCases=0, F;
-double alpha=2.50;
+double alpha=1.95;
 	int i=0;
 	double count[20];
 double q = 1/(1-alpha);
