@@ -38,7 +38,7 @@
 #include "transform.h"
 #include "redefine.h"
 #include "math.h"
-#define alpha 1.25
+#define alpha 1.95
 #define q 1/(1-alpha)
 #define	PartInfo(n) (pow(n,alpha)/GEnv.Cases)-1 *q
 
@@ -155,7 +155,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
 		{
 		    fprintf(Of, "\t\tCut at %.3f  (gain %.3f):",
 			   (GEnv.LowVal + GEnv.HighVal) / 2,
-			  (1 - GEnv.UnknownRate) *
+			  (pow((1 - GEnv.UnknownRate),alpha)) *
 			   (GEnv.BaseInfo - (GEnv.NAInfo + LHInfo) / GEnv.KnownCases));
 		    PrintDistribution(Att, 2, 3, GEnv.Freq, GEnv.ValFreq, true);
 		})
@@ -165,7 +165,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
 	}
     }
 
-    BestGain = (1 -GEnv.UnknownRate) *
+    BestGain =pow((1 -GEnv.UnknownRate),alpha)) *
 	       (GEnv.BaseInfo - (GEnv.NAInfo + LeastInfo) / GEnv.KnownCases);
 
     /*  The threshold cost is the lesser of the cost of indicating the
@@ -285,7 +285,7 @@ void EstimateMaxGR(Attribute Att, CaseNo Fp, CaseNo Lp)
 			    + PartInfo(GEnv.LowCases)
 			    + PartInfo(GEnv.ApplicCases - GEnv.LowCases)) / GEnv.Cases;
 
-		ThisGain =(1 - GEnv.UnknownRate) *
+		ThisGain =(pow((1 - GEnv.UnknownRate),alpha)) *
 			   (GEnv.BaseInfo - (GEnv.NAInfo + LHInfo) / GEnv.KnownCases);
 		if ( ThisGain > Gain[Att] ) Gain[Att] = ThisGain;
 
