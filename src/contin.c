@@ -63,7 +63,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
     ClassNo	c;
     ContValue	Interval;
 
-    Verbosity(3, fprintf(Of, "\tAtt %s\n", AttName[Att]))
+    Verbosity(3, fprintf(Of, "\tAtt %s\n", AttName[Att]));
 
     Gain[Att] = None;
     PrepareForContin(Att, Fp, Lp);
