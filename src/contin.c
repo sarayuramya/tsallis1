@@ -38,7 +38,7 @@
 #include "transform.h"
 #include "redefine.h"
 #include "math.h"
-#define alpha 1.95
+#define alpha 1.85
 #define q 1/(1-alpha)
 #define	PartInfo(n) (pow(n,alpha)/GEnv.Cases)-1 *q
 
@@ -165,7 +165,7 @@ void EvalContinuousAtt(Attribute Att, CaseNo Fp, CaseNo Lp)
 	}
     }
 
-    BestGain = pow((1 -GEnv.UnknownRate),alpha) *
+    BestGain = (1 -GEnv.UnknownRate) *
 	       (GEnv.BaseInfo - (GEnv.NAInfo + LeastInfo) / GEnv.KnownCases);
 
     /*  The threshold cost is the lesser of the cost of indicating the
@@ -285,7 +285,7 @@ void EstimateMaxGR(Attribute Att, CaseNo Fp, CaseNo Lp)
 			    + PartInfo(GEnv.LowCases)
 			    + PartInfo(GEnv.ApplicCases - GEnv.LowCases)) / GEnv.Cases;
 
-		ThisGain =pow((1 - GEnv.UnknownRate),alpha) *
+		ThisGain =(1 - GEnv.UnknownRate) *
 			   (GEnv.BaseInfo - (GEnv.NAInfo + LHInfo) / GEnv.KnownCases);
 		if ( ThisGain > Gain[Att] ) Gain[Att] = ThisGain;
 
