@@ -52,7 +52,7 @@ void EvalDiscreteAtt(Attribute Att, CaseCount Cases)
     DiscrValue	v;
     double	BaseInfo;
     double unknown=0.0;
-    double alpha=1.95;
+    double alpha=1.25;
     SetDiscrFreq(Att);
     KnownCases = Cases - GEnv.ValFreq[0];
 
