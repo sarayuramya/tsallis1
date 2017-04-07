@@ -87,7 +87,7 @@ void EvalSubset(Attribute Att, CaseCount Cases)
     CaseCount	KnownCases;
     Boolean	Better;
 	int i=0;
-double alpha = 1.35;
+double alpha = 1.25;
 double q= 1/(1-alpha);
     /*  First compute Freq[][], ValFreq[], base info, and the gain
 	and total info of a split on discrete attribute Att  */
